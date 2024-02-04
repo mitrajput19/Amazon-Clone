@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -17,14 +18,13 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-
   Auth _auth = Auth.signup;
-  final _signupFormKey = GlobalKey();
-  final _signinFormKey = GlobalKey();
+  final _signupFormKey = GlobalKey<FormState>();
+  final _signinFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
+  final AuthService authService = AuthService();
 
   @override
   void dispose() {
@@ -32,6 +32,14 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
   }
 
   @override
@@ -50,12 +58,14 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
             ListTile(
-              tileColor: (_auth==Auth.signup)? GlobalVariables.backgroundColor:GlobalVariables.greyBackgroundCOlor,
+              tileColor: (_auth == Auth.signup)
+                  ? GlobalVariables.backgroundColor
+                  : GlobalVariables.greyBackgroundCOlor,
               leading: Radio(
                 activeColor: GlobalVariables.secondaryColor,
                 value: Auth.signup,
                 groupValue: _auth,
-                onChanged: (Auth? val){
+                onChanged: (Auth? val) {
                   setState(() {
                     _auth = val!;
                   });
@@ -66,7 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            if(_auth==Auth.signup)
+            if (_auth == Auth.signup)
               Container(
                 padding: const EdgeInsets.all(8),
                 color: Colors.white,
@@ -74,26 +84,45 @@ class _AuthScreenState extends State<AuthScreen> {
                   key: _signupFormKey,
                   child: Column(
                     children: [
-                      CustomTextField(controller: _nameController, hintText: 'Name',),
-                      const SizedBox(height: 10,),
-                      CustomTextField(controller: _emailController, hintText: 'Email',),
-                      const SizedBox(height: 10,),
-                      CustomTextField(controller: _passwordController, hintText: 'Password',),
-                      const SizedBox(height: 10,),
-                      CustomButton(text: "Sign up", onTap: (){
-
+                      CustomTextField(
+                        controller: _nameController,
+                        hintText: 'Name',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        controller: _emailController,
+                        hintText: 'Email',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        controller: _passwordController,
+                        hintText: 'Password',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(text: "Sign up", onTap: () {
+                        if(_signupFormKey.currentState!.validate()){
+                          signUpUser();
+                        }
                       })
                     ],
                   ),
                 ),
               ),
             ListTile(
-              tileColor: (_auth==Auth.signin)? GlobalVariables.backgroundColor:GlobalVariables.greyBackgroundCOlor,
+              tileColor: (_auth == Auth.signin)
+                  ? GlobalVariables.backgroundColor
+                  : GlobalVariables.greyBackgroundCOlor,
               leading: Radio(
                 activeColor: GlobalVariables.secondaryColor,
                 value: Auth.signin,
                 groupValue: _auth,
-                onChanged: (Auth? val){
+                onChanged: (Auth? val) {
                   setState(() {
                     _auth = val!;
                   });
@@ -104,7 +133,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            if(_auth==Auth.signin)
+            if (_auth == Auth.signin)
               Container(
                 padding: const EdgeInsets.all(8),
                 color: Colors.white,
@@ -112,13 +141,23 @@ class _AuthScreenState extends State<AuthScreen> {
                   key: _signupFormKey,
                   child: Column(
                     children: [
-                      CustomTextField(controller: _emailController, hintText: 'Email',),
-                      const SizedBox(height: 10,),
-                      CustomTextField(controller: _passwordController, hintText: 'Password',),
-                      const SizedBox(height: 10,),
-                      CustomButton(text: "Sign in", onTap: (){
+                      CustomTextField(
+                        controller: _emailController,
+                        hintText: 'Email',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        controller: _passwordController,
+                        hintText: 'Password',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(text: "Sign in", onTap: () {
 
-                      })
+                      }),
                     ],
                   ),
                 ),
