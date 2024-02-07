@@ -7,7 +7,10 @@ environment:
   sdk: '>=2.19.2 <3.0.0'
 
 dependencies:
-  http:
+  http: ^0.13.4
+  provider: ^6.0.2
+  shared_preferences: ^2.2.2
+  badges:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
