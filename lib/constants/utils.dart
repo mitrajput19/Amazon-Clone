@@ -9,3 +9,14 @@ void showSnackBar(BuildContext context, String text) {
     ),
   );
 }
+
+pickImages() async {
+  List<File> images = [
+  ];
+
+  try{
+
+  }catch(e){
+    debugPrint(e);
+  }
+}

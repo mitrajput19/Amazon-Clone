@@ -1,50 +1,79 @@
 import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/account/screens/account_screen.dart';
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:amazon_clone/features/admin/screens/post_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart' as badges;
 
-class BottomBar extends StatefulWidget {
-  static const String routeName = '/actual-home';
-  const BottomBar({Key? key}) : super(key: key);
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({Key? key}) : super(key: key);
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const HomeScreen(),
-    const AccountScreen(),
-    const Center(child: Text('Chart Page'),),
+    PostScreen(),
+    const Center(
+      child: Text('Analytics Page'),
+    ),
+    const Center(
+      child: Text('Cart Page'),
+    ),
   ];
 
-  void updatePage(int Page){
+  void updatePage(int Page) {
     setState(() {
-      _page=Page;
+      _page = Page;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+          child: AppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Image.asset(
+                    'assets/images/amazon_in.png',
+                    width: 120,
+                    height: 50,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  "Admin",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+            ),
+            flexibleSpace: Container(
+              decoration:
+                  BoxDecoration(gradient: GlobalVariables.appBarGradient),
+            ),
+          ),
+          preferredSize: const Size.fromHeight(50)),
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
-        onTap: updatePage,
         currentIndex: _page,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
+        onTap: updatePage,
         items: [
+          // POSTS
           BottomNavigationBarItem(
-            label: '',
             icon: Container(
-              child: Icon(Icons.home_outlined),
               width: bottomBarWidth,
               decoration: BoxDecoration(
                 border: Border(
@@ -56,12 +85,15 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
+              child: const Icon(
+                Icons.home_outlined,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
             label: '',
+          ),
+          // ANALYTICS
+          BottomNavigationBarItem(
             icon: Container(
-              child: Icon(Icons.person_outlined),
               width: bottomBarWidth,
               decoration: BoxDecoration(
                 border: Border(
@@ -73,21 +105,15 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Container(
-              child: badges.Badge(
-                position: badges.BadgePosition.topEnd(top: 10, end: 10),
-                badgeContent: Text("2"),
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: Colors.white
-                ),
-                child: Icon(
-                  Icons.shopping_cart_checkout_outlined,
-                ),
+              child: const Icon(
+                Icons.analytics_outlined,
               ),
+            ),
+            label: '',
+          ),
+          // ORDERS
+          BottomNavigationBarItem(
+            icon: Container(
               width: bottomBarWidth,
               decoration: BoxDecoration(
                 border: Border(
@@ -99,7 +125,11 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
+              child: const Icon(
+                Icons.all_inbox_outlined,
+              ),
             ),
+            label: '',
           ),
         ],
       ),
