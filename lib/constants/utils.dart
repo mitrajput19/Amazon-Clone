@@ -17,6 +17,6 @@ pickImages() async {
   try{
 
   }catch(e){
-    debugPrint(e);
+    debugPrint(e as String?);
   }
 }
