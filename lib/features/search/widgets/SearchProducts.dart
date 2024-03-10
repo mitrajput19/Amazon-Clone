@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/widgets/stars.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class SearchProduct extends StatelessWidget {
             children: [
               Image.network(
                 product.images[0],
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fitWidth,
                 height: 135,
                 width: 135,
               ),
@@ -37,9 +38,9 @@ class SearchProduct extends StatelessWidget {
                   Container(
                     width: 205,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    // child: Stars(
-                    //   rating: avgRating,
-                    // ),
+                    child: Stars(
+                      rating: 4,
+                    ),
                   ),
                   Container(
                     width: 205,
@@ -54,10 +55,12 @@ class SearchProduct extends StatelessWidget {
                     ),
                   ),
                   Container(
+                    width: 205,
                     padding: const EdgeInsets.only(left: 10),
                     child: const Text('Eligible for FREE Shipping', overflow: TextOverflow.ellipsis,),
                   ),
                   Container(
+                    width: 205,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: const Text(
                       'In Stock',

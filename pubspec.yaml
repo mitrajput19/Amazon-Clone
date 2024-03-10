@@ -14,6 +14,10 @@ dependencies:
   dotted_border: ^2.1.0
   file_picker:
   cloudinary_public: ^0.23.1
+  flutter_rating_bar:
+  pay:
+  intl:
+  charts_flutter:
   badges:
   flutter:
     sdk: flutter
@@ -30,6 +34,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/applepay.json
+    - assets/gpay.json
   #   - images/a_dot_ham.jpeg
 
   # example:
